@@ -2,14 +2,26 @@ INC=./includes
 SRC=./src
 OUT=./bin
 
-$(OUT)/lab: $(OUT)/main.o $(OUT)/hello.o
- gcc ­o $(OUT)/lab $(OUT)/main.o $(OUT)/hello.o
+$(OUT)/lab: $(OUT)/main.o $(OUT)/std.o $(OUT)/child.o $(OUT)/posix.o $(OUT)/kill.o $(OUT)/pipe.o
+	gcc -o $(OUT)/lab $(OUT)/main.o $(OUT)/std.o $(OUT)/child.o $(OUT)/posix.o $(OUT)/kill.o $(OUT)/pipe.o
 
-$(OUT)/main.o: $(SRC)/main.c $(INC)/hello.h
- gcc ­I$(INC) ­o $(OUT)/main.o ­c $(SRC)/main.c
+$(OUT)/main.o: $(SRC)/main.c $(INC)/labHeader.h
+	gcc -I$(INC) -o $(OUT)/main.o -c $(SRC)/main.c
 
-$(OUT)/hello.o: $(SRC)/hello.c $(INC)/hello.h
- gcc ­I$(INC) ­o $(OUT)/hello.o ­c $(SRC)/hello.c
+$(OUT)/std.o: $(SRC)/std.c $(INC)/labHeader.h
+	gcc -I$(INC) -o $(OUT)/std.o -c $(SRC)/std.c
+
+$(OUT)/child.o: $(SRC)/child.c $(INC)/labHeader.h
+	gcc -I$(INC) -o $(OUT)/child.o -c $(SRC)/child.c
+
+$(OUT)/posix.o: $(SRC)/posix.c $(INC)/labHeader.h
+	gcc -I$(INC) -o $(OUT)/posix.o -c $(SRC)/posix.c
+
+$(OUT)/kill.o: $(SRC)/kill.c $(INC)/labHeader.h
+	gcc -I$(INC) -o $(OUT)/kill.o -c $(SRC)/kill.c
+
+$(OUT)/pipe.o: $(SRC)/pipe.c $(INC)/labHeader.h
+	gcc -I$(INC) -o $(OUT)/pipe.o -c $(SRC)/pipe.c
 
 clean:
- rm $(OUT)/*.o $(OUT)/lab
+	rm $(OUT)/*.o $(OUT)/lab
